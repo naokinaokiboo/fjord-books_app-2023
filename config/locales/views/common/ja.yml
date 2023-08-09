@@ -1,0 +1,6 @@
+ja:
+  common:
+    message:
+      created: %{model} が作成されました。
+      updated: %{model} が更新されました。
+      destroyed: %{model} が削除されました。

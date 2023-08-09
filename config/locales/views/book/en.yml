@@ -1,0 +1,13 @@
+en:
+  book:
+    title:
+      index: Books
+      new: New book
+      edit: Editing book
+    button:
+      new: Create Book
+      update: Update Book
+      destroy: Destroy this book
+    link:
+      to_edit: Edit this book
+      to_books: Back to books

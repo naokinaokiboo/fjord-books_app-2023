@@ -1,10 +1,10 @@
-<h1>Editing book</h1>
+<h1><%= t 'book.title.edit' %></h1>
 
 <%= render "form", book: @book %>
 
 <br>
 
 <nav class="page-nav">
-  <%= link_to "Show this book", @book %> |
-  <%= link_to "Back to books", books_path %>
+  <%= link_to t('book.link.to_detail'), @book %> |
+  <%= link_to t('book.link.to_books'), books_path %>
 </nav>

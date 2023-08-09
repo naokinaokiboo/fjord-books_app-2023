@@ -11,3 +11,5 @@ en:
     link:
       to_edit: Edit this book
       to_books: Back to books
+      to_detail: Show this book
+      to_new: New book

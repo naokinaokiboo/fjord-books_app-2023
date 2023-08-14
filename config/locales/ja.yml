@@ -194,6 +194,7 @@ ja:
       title_edit: "%{name}の編集"
       error: エラー
       validation_error: "%{errors}があるため、この%{name}は保存できませんでした"
+      log_out: ログアウト
     pagination:
       first: '« 最初'
       last: '最後 »'

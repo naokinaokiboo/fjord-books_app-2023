@@ -4,4 +4,19 @@
     <%= user.email %>
   </p>
 
+  <p>
+    <strong><%= User.human_attribute_name(:postal_code) %>:</strong>
+    <%= user.postal_code %>
+  </p>
+
+  <p>
+    <strong><%= User.human_attribute_name(:address) %>:</strong>
+    <%= user.address %>
+  </p>
+
+  <p>
+    <strong><%= User.human_attribute_name(:description) %>:</strong>
+    <%= user.description %>
+  </p>
+
 </div>

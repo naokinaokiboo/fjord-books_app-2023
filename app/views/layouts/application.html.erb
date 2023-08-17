@@ -12,8 +12,14 @@
 
   <body class="<%= params[:action] %>">
     <% if user_signed_in? %>
-      <%= link_to t('views.common.log_out'), destroy_user_session_path, data: { turbo_method: "delete" } %>
-      <%= link_to t('views.common.account_edit'), edit_user_registration_path %>
+      <nav class="navigation">
+        <ul>
+          <li><%= link_to "本の一覧", books_path %></li>
+          <li><%= link_to "ユーザー一覧", users_path %></li>
+          <li><%= link_to t('views.common.account_edit'), edit_user_registration_path %></li>
+          <li><%= link_to t('views.common.log_out'), destroy_user_session_path, data: { turbo_method: "delete" } %></li>
+        </ul>
+      </nav>
     <% end %>
 
     <%= yield %>

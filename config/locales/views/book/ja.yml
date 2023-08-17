@@ -1,0 +1,15 @@
+ja:
+  book:
+    title:
+      index: 書籍一覧
+      new: 新しい書籍
+      edit: 書籍を編集中
+    button:
+      new: 登録する
+      update: 更新する
+      destroy: この書籍を削除する
+    link:
+      to_edit: 編集画面へ
+      to_books: 書籍一覧へ
+      to_detail: 詳細を表示
+      to_new: 新規登録

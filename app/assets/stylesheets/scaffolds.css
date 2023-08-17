@@ -328,3 +328,11 @@ form input[type="submit"]:hover {
   display: inline-block;
   margin-right: 15px;
 }
+
+.notice {
+  color: green;
+}
+
+.alert {
+  color: red;
+}

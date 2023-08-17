@@ -13,6 +13,7 @@
   <body class="<%= params[:action] %>">
     <% if user_signed_in? %>
       <%= link_to t('views.common.log_out'), destroy_user_session_path, data: { turbo_method: "delete" } %>
+      <%= link_to t('views.common.account_edit'), edit_user_registration_path %>
     <% end %>
 
     <%= yield %>

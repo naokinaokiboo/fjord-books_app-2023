@@ -195,6 +195,7 @@ ja:
       error: エラー
       validation_error: "%{errors}があるため、この%{name}は保存できませんでした"
       log_out: ログアウト
+      account_edit: アカウント編集
     pagination:
       first: '« 最初'
       last: '最後 »'

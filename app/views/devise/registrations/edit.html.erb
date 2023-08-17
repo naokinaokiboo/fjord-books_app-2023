@@ -53,6 +53,6 @@
 
 <h3><%= t 'views.common.cancel_account' %></h3>
 
-<div><%= t('views.common.unhappy') %><%= button_to t('views.common.cancel_account'), registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+<div><%= t('views.common.unhappy') %><%= button_to t('views.common.cancel_account'), registration_path(resource_name), data: { confirm: t('views.common.delete_confirm'), turbo_confirm: t('views.common.delete_confirm') }, method: :delete %></div>
 
 <%= link_to t('views.common.back_to_previous'), :back %>

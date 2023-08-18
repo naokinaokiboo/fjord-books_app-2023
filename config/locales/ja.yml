@@ -196,6 +196,8 @@ ja:
       validation_error: "%{errors}があるため、この%{name}は保存できませんでした"
       title_show: "%{name}の詳細"
       sign_out: ログアウト
+      currently_set: "現在設定されている%{name}"
+      not_set: 設定されていません
     pagination:
       first: '« 最初'
       last: '最後 »'

@@ -5,8 +5,11 @@
 </div>
 
 <nav class="page-nav">
-  <%= link_to "Edit this report", edit_report_path(@report) %> |
+  <% is_my_report = current_user == @report.user %>
+  <% if is_my_report%>
+    <%= link_to "Edit this report", edit_report_path(@report) %> |
+  <% end %>
   <%= link_to "Back to reports", reports_path %>
 
-  <%= button_to "Destroy this report", @report, method: :delete %>
+  <%= button_to "Destroy this report", @report, method: :delete  if is_my_report %>
 </nav>

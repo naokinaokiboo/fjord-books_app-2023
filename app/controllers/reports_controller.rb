@@ -17,6 +17,7 @@ class ReportsController < ApplicationController
 
   # GET /reports/1/edit
   def edit
+    render file: "#{Rails.root}/public/403.html", layout: false, status: :forbidden if @report.user_id != current_user.id
   end
 
   # POST /reports or /reports.json

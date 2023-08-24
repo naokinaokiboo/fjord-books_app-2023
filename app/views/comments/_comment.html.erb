@@ -1,0 +1,18 @@
+<div id="<%= dom_id comment %>">
+  <% user = User.find(comment.user_id) %>
+  <table>
+    <tbody>
+      <td>
+        <%= comment.content %>
+      </td>
+      <td>
+        投稿者 <%= user.name.empty? ? user.email : user.name %>
+      <td>
+      <td>
+        投稿日時 <%= comment.created_at.strftime('%Y-%m-%d %H:%M') %>
+      </td>
+    </tbody>
+  </table>
+
+  <%= button_to 'このコメントを削除', polymorphic_path([comment.commentable, comment]), method: :delete if user.id == current_user.id %>
+</div>

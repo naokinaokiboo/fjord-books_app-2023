@@ -13,3 +13,7 @@
 
   <%= button_to "Destroy this report", @report, method: :delete  if is_my_report %>
 </nav>
+
+<%= render partial: @report.comments %>
+
+<%= render 'comments/form', commentable: @report %>

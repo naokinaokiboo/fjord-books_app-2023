@@ -194,6 +194,18 @@ ja:
       title_edit: "%{name}の編集"
       error: エラー
       validation_error: "%{errors}があるため、この%{name}は保存できませんでした"
+      sign_up: 登録
+      log_in: ログイン
+      log_out: ログアウト
+      account_edit: アカウント編集
+      char_min: "%{num}文字以上"
+      forgot_password: パスワードを忘れましたか？
+      not_change_password: 変更しない場合は空白のままにしてください
+      confirm_password: 変更を承認するには現在のパスワードが必要です
+      update: 更新
+      cancel_account: アカウントを削除
+      unhappy: 不満ですか？
+      back_to_previous: 戻る
     pagination:
       first: '« 最初'
       last: '最後 »'

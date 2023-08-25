@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
 
   def edit
     @comment = @commentable.comments.find(params[:id])
-    render file: Rails.root.join('public/403.html'), layout: false, status: :forbidden if @report.user_id != current_user.id
+    render file: Rails.root.join('public/403.html'), layout: false, status: :forbidden if @comment.user_id != current_user.id
   end
 
   def update

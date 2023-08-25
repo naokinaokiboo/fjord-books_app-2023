@@ -11,6 +11,10 @@
   <%= button_to t('views.common.destroy', name: Book.model_name.human.downcase), @book, method: :delete %>
 </nav>
 
-<%= render partial: 'comments/comment', collection: @book.comments %>
+<% if @book.comments.empty? %>
+  <p>コメントはありません。</p>
+<% else %>
+  <%= render partial: 'comments/comment', collection: @book.comments %>
+<% end %>
 
 <%= render partial: 'comments/form', locals: { commentable: @book } %>

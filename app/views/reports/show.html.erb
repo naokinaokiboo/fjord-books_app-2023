@@ -14,6 +14,10 @@
   <%= button_to "Destroy this report", @report, method: :delete  if is_my_report %>
 </nav>
 
-<%= render partial: 'comments/comment', collection: @report.comments %>
+<% if @report.comments.empty? %>
+  <p>コメントはありません。</p>
+<% else %>
+  <%= render partial: 'comments/comment', collection: @report.comments %>
+<% end %>
 
 <%= render partial: 'comments/form', locals: { commentable: @report } %>

@@ -1,0 +1,9 @@
+<h1>Editing comment</h1>
+
+<%= render partial: "form", locals: {commentable: @commentable, comment: @comment } %>
+
+<br>
+
+<nav class="pabe-nav">
+  <%= link_to '戻る',  @commentable %>
+</nav>

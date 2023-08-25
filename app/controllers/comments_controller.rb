@@ -13,6 +13,20 @@ class CommentsController < ApplicationController
     end
   end
 
+  def edit
+    @comment = @commentable.comments.find(params[:id])
+    render file: "#{Rails.root}/public/403.html", layout: false, status: :forbidden if @comment.user_id != current_user.id
+  end
+  
+  def update
+    @comment = @commentable.comments.find(params[:id])
+    if @comment.update(comment_params)
+      redirect_to @commentable, notice: 'コメントが正常に更新されました。'
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     comment = @commentable.comments.find(params[:id])
     if comment.destroy

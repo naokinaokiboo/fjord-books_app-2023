@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
     if comment.save
       redirect_to @commentable, notice: 'コメントが正常に投稿されました。'
     else
-      # TODO
+      render_show_template_of_commentable
     end
   end
 
@@ -13,7 +13,7 @@ class CommentsController < ApplicationController
     if comment.destroy
       redirect_to @commentable, notice: 'コメントが正常に削除されました。'
     else
-      # TODO
+      render_show_template_of_commentable
     end
   end
 

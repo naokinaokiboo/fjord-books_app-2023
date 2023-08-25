@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CommentsController < ApplicationController
   def create
     comment = @commentable.comments.build(comment_params.merge(user_id: current_user.id))
@@ -5,7 +7,7 @@ class CommentsController < ApplicationController
       redirect_to @commentable, notice: t('controllers.common.notice_create', name: Comment.model_name.human)
     else
       # error表示用 : validatesにかかった場合の、errorsを持ったオブジェクト
-      @comment = @commentable.comments.find { |comment| comment.id.nil? }
+      @comment = comment
 
       # create失敗時にDBに未保存のデータが残っており、ビューでエラーが出るため、DBから引き直す
       @commentable.comments.reset
@@ -15,9 +17,9 @@ class CommentsController < ApplicationController
 
   def edit
     @comment = @commentable.comments.find(params[:id])
-    render file: "#{Rails.root}/public/403.html", layout: false, status: :forbidden if @comment.user_id != current_user.id
+    render file: Rails.root.join('public/403.html'), layout: false, status: :forbidden if @report.user_id != current_user.id
   end
-  
+
   def update
     @comment = @commentable.comments.find(params[:id])
     if @comment.update(comment_params)

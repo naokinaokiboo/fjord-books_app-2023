@@ -6,7 +6,7 @@
 
 <nav class="page-nav">
   <% is_my_report = current_user == @report.user %>
-  <% if is_my_report%>
+  <% if is_my_report %>
     <%= link_to t('views.common.edit', name: Report.model_name.human.downcase), edit_report_path(@report) %> |
   <% end %>
   <%= link_to t('views.common.back', name: i18n_pluralize(Report.model_name.human.downcase)), reports_path %>

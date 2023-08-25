@@ -17,4 +17,4 @@
   <%= render partial: 'comments/comment', collection: @book.comments %>
 <% end %>
 
-<%= render partial: 'comments/form', locals: { commentable: @book } %>
+<%= render partial: 'comments/form', locals: { commentable: @book, comment: @comment } %>

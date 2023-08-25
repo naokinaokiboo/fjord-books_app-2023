@@ -20,4 +20,4 @@
   <%= render partial: 'comments/comment', collection: @report.comments %>
 <% end %>
 
-<%= render partial: 'comments/form', locals: { commentable: @report } %>
+<%= render partial: 'comments/form', locals: { commentable: @report, comment: @comment} %>

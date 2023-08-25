@@ -319,3 +319,38 @@ form input[type="submit"] {
 form input[type="submit"]:hover {
   background-color: var(--global-primary-c-hover);
 }
+
+.comments {
+  background-color: #f1ecec;
+  font-size: 14px;
+  table-layout: fixed;
+  width: 640px;
+  margin-top: 25px;
+  margin-bottom: 5px;
+}
+
+.comments .user_name {
+  padding: 10px;
+}
+
+.comments .created_at {
+  padding: 10px;
+  text-align: right;
+}
+
+.comments .content {
+  padding: 20px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.comments_link {
+  width: 640px;
+  text-align: right;
+}
+
+.comments_link a, .comments_link form {
+  display: inline-block;
+  font-size: 14px;
+  margin-left: 10px;
+}

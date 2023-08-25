@@ -2,29 +2,30 @@
 
   <% user = User.find(comment.user_id) %>
 
-  <table>
+  <table class="comments">
     <tbody>
-      <td>
-        <%= comment.content %>
-      </td>
-      <td>
-        <%= t(Comment.human_attribute_name(:user)) %>
-      </td>
-      <td>
-        <%= user.name.empty? ? user.email : user.name %>
-      </td>
-      <td>
-        <%= t(Comment.human_attribute_name(:created_at)) %>
-      </td>
-      <td>
-        <%= comment.created_at.strftime('%Y-%m-%d %H:%M') %>
-      </td>
+      <tr>
+        <td class="user_name">
+          <%= t(Comment.human_attribute_name(:user)) %>
+          <%= user.name.empty? ? user.email : user.name %>
+        </td>
+        <td class="created_at">
+          <%= t(Comment.human_attribute_name(:created_at)) %>
+          <%= comment.created_at.strftime('%Y-%m-%d %H:%M') %>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" class="content"><%= comment.content %></td>
+      </tr>
+      
     </tbody>
   </table>
 
-  <% if user.id == current_user.id %>
-    <%= link_to t('views.common.edit', name: Comment.model_name.human.downcase), polymorphic_path([:edit, comment.commentable, comment]) %>
-    <%= button_to t('views.common.destroy', name: Comment.model_name.human.downcase), polymorphic_path([comment.commentable, comment]), method: :delete %>
-  <% end %>
+  <div class="comments_link">
+    <% if user.id == current_user.id %>
+      <%= link_to t('views.common.edit', name: Comment.model_name.human.downcase), polymorphic_path([:edit, comment.commentable, comment]) %>
+      <%= button_to t('views.common.destroy', name: Comment.model_name.human.downcase), polymorphic_path([comment.commentable, comment]), method: :delete %>
+    <% end %>
+  </div>
 
 </div>

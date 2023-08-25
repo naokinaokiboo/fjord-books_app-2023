@@ -1,20 +1,30 @@
 <div id="<%= dom_id comment %>">
+
   <% user = User.find(comment.user_id) %>
+
   <table>
     <tbody>
       <td>
         <%= comment.content %>
       </td>
       <td>
-        投稿者 <%= user.name.empty? ? user.email : user.name %>
+        <%= t(Comment.human_attribute_name(:user)) %>
+      </td>
       <td>
+        <%= user.name.empty? ? user.email : user.name %>
+      </td>
       <td>
-        投稿日時 <%= comment.created_at.strftime('%Y-%m-%d %H:%M') %>
+        <%= t(Comment.human_attribute_name(:created_at)) %>
+      </td>
+      <td>
+        <%= comment.created_at.strftime('%Y-%m-%d %H:%M') %>
       </td>
     </tbody>
   </table>
+
   <% if user.id == current_user.id %>
-    <%= link_to 'このコメントを編集', polymorphic_path([:edit, comment.commentable, comment]) %>
-    <%= button_to 'このコメントを削除', polymorphic_path([comment.commentable, comment]), method: :delete %>
+    <%= link_to t('views.common.edit', name: Comment.model_name.human.downcase), polymorphic_path([:edit, comment.commentable, comment]) %>
+    <%= button_to t('views.common.destroy', name: Comment.model_name.human.downcase), polymorphic_path([comment.commentable, comment]), method: :delete %>
   <% end %>
+
 </div>

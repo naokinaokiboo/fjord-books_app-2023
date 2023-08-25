@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   def create
     comment = @commentable.comments.build(comment_params.merge(user_id: current_user.id))
     if comment.save
-      redirect_to @commentable, notice: 'コメントが正常に投稿されました。'
+      redirect_to @commentable, notice: t('controllers.common.notice_create', name: Comment.model_name.human)
     else
       # error表示用 : validatesにかかった場合の、errorsを持ったオブジェクト
       @comment = @commentable.comments.find { |comment| comment.id.nil? }
@@ -21,7 +21,7 @@ class CommentsController < ApplicationController
   def update
     @comment = @commentable.comments.find(params[:id])
     if @comment.update(comment_params)
-      redirect_to @commentable, notice: 'コメントが正常に更新されました。'
+      redirect_to @commentable, notice: t('controllers.common.notice_update', name: Comment.model_name.human)
     else
       render :edit, status: :unprocessable_entity
     end
@@ -30,7 +30,7 @@ class CommentsController < ApplicationController
   def destroy
     comment = @commentable.comments.find(params[:id])
     if comment.destroy
-      redirect_to @commentable, notice: 'コメントが正常に削除されました。'
+      redirect_to @commentable, notice: t('controllers.common.notice_destroy', name: Comment.model_name.human)
     else
       render_show_template_of_commentable
     end

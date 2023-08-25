@@ -12,7 +12,7 @@
 </nav>
 
 <% if @book.comments.empty? %>
-  <p>コメントはありません。</p>
+  <p><%= t 'views.common.not_exist', name: Comment.model_name.human %></p>
 <% else %>
   <%= render partial: 'comments/comment', collection: @book.comments %>
 <% end %>

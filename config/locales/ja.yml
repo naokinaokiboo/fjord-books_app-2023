@@ -196,6 +196,8 @@ ja:
       validation_error: "%{errors}があるため、この%{name}は保存できませんでした"
       title_show: "%{name}の詳細"
       sign_out: ログアウト
+      not_exist: "%{name}はありません。"
+      back_to_target: "この%{name}の投稿に戻る"
     pagination:
       first: '« 最初'
       last: '最後 »'

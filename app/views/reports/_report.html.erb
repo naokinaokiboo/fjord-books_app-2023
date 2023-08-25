@@ -1,22 +1,22 @@
 <div id="<%= dom_id report %>">
   <p>
-    <strong>作成者:</strong>
+    <strong><%= Report.human_attribute_name(:user) %>:</strong>
     <% user = User.find(report.user_id) %>
     <%= user.name.empty? ? user.email : user.name %>
   </p>
 
   <p>
-    <strong>Title:</strong>
+    <strong><%= Report.human_attribute_name(:title) %>:</strong>
     <%= report.title %>
   </p>
 
   <p>
-    <strong>Content:</strong>
+    <strong><%= Report.human_attribute_name(:content) %>:</strong>
     <%= report.content %>
   </p>
 
   <p>
-    <strong>投稿日時:</strong>
+    <strong><%= Report.human_attribute_name(:created_at) %>:</strong>
     <%= report.created_at.strftime('%Y-%m-%d %H:%M') %>
   </p>
 

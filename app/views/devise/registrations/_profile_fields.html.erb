@@ -17,3 +17,21 @@
   <%= f.label :self_introduction %><br />
   <%= f.text_area :self_introduction %>
 </div>
+
+<% if user_signed_in? %>
+  <div class="field">
+    <label><%= t 'views.common.currently_set', name: User.human_attribute_name(:image) %></label>
+    <p>
+    <% if current_user.image.attached? %><p>
+      <%= image_tag current_user.image.variant(resize_to_limit: [128, 128]) %>
+    <% else %>
+      <%= t 'views.common.not_set' %>
+    <% end %>
+    </p>
+  </div>
+<% end %>
+
+<div class="field">
+  <%= f.label :image %><br />
+  <%= f.file_field :image %>
+</div>

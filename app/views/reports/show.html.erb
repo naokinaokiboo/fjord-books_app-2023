@@ -4,6 +4,8 @@
   <%= render @report %>
 </div>
 
+<%= render partial: 'mention', locals: { reports: @report.mentioned_reports } %>
+
 <%= render 'shared/comments', commentable: @report %>
 
 <nav class="page-nav">

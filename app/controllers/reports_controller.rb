@@ -20,20 +20,47 @@ class ReportsController < ApplicationController
 
   def create
     @report = current_user.reports.new(report_params)
+    ids_to_other_report = find_ids_to_other_report(@report.content)
+    begin
+      ActiveRecord::Base.transaction do
+        @report.save!
 
-    if @report.save
-      redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human)
-    else
+        ids_to_other_report.each do |id|
+          next if ReportMention.exists?(mentioning_report_id: @report.id, mentioned_report_id: id)
+
+          ReportMention.create!(mentioning_report_id: @report.id, mentioned_report_id: id)
+        end
+      end
+    rescue ActiveRecord::RecordInvalid => e
+      loger.error(e.message)
       render :new, status: :unprocessable_entity
+      return
     end
+    redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human)
   end
 
   def update
-    if @report.update(report_params)
-      redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human)
-    else
+    new_mentioning_ids = find_ids_to_other_report(report_params[:content])
+    old_mentioning_ids = @report.mentioning_reports.each.map(&:id)
+
+    begin
+      ActiveRecord::Base.transaction do
+        @report.update!(report_params)
+
+        old_mentioning_ids.difference(new_mentioning_ids).each do |id_to_be_deleted|
+          ReportMention.find_by(mentioning_report_id: @report.id, mentioned_report_id: id_to_be_deleted).destroy!
+        end
+
+        new_mentioning_ids.difference(old_mentioning_ids).each do |id_to_be_saved|
+          ReportMention.create!(mentioning_report_id: @report.id, mentioned_report_id: id_to_be_saved)
+        end
+      end
+    rescue ActiveRecord::RecordInvalid => e
+      loger.error(e.message)
       render :edit, status: :unprocessable_entity
+      return
     end
+    redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human)
   end
 
   def destroy
@@ -50,5 +77,13 @@ class ReportsController < ApplicationController
 
   def report_params
     params.require(:report).permit(:title, :content)
+  end
+
+  def find_ids_to_other_report(text)
+    domain_path = 'http://localhost:3000/reports/'
+    ids_to_report = text.scan(/(?<=#{domain_path})[1-9][0-9]*/).uniq.map(&:to_i)
+    ids_to_report.delete(@report.id)
+    existing_report_ids = Report.ids
+    ids_to_report.delete_if { |id| !existing_report_ids.include?(id) }
   end
 end

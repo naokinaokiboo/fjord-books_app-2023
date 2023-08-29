@@ -1,0 +1,12 @@
+<div class="mentions-container">
+  <% unless reports.empty? %>
+    <strong>この日報は以下の日報からリンクされています</strong>
+    <ul>
+      <% reports.each do |report| %>
+        <li>
+          <%= link_to report.title, report %> からリンク
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

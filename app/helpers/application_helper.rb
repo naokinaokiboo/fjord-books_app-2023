@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'uri'
+
 module ApplicationHelper
   # localeに応じて複数形の表記を変える
   # - 日本語の場合 => 本
@@ -17,5 +19,12 @@ module ApplicationHelper
 
   def format_content(content)
     safe_join(content.split("\n"), tag.br)
+  end
+
+  def convert_to_linked_text(text)
+    URI.extract(text, ['http', 'https']).uniq.each_with_object(text) do |url|
+      linked_text = "<a href=\"#{url}\">#{url}</a>"
+      text.gsub!(url, linked_text)
+    end
   end
 end

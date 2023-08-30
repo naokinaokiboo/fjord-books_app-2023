@@ -18,7 +18,7 @@ class ReportsController < ApplicationController
 
   # GET /reports/1/edit
   def edit
-    render file: Rails.root.join('public/403.html'), layout: false, status: :forbidden if @report.user_id != current_user.id
+    render_403_page unless request_from_author?
   end
 
   # POST /reports or /reports.json
@@ -34,6 +34,8 @@ class ReportsController < ApplicationController
 
   # PATCH/PUT /reports/1 or /reports/1.json
   def update
+    render_403_page and return unless request_from_author?
+
     if @report.update(report_params)
       redirect_to report_url(@report), notice: t('controllers.common.notice_update', name: Report.model_name.human)
     else
@@ -43,6 +45,8 @@ class ReportsController < ApplicationController
 
   # DELETE /reports/1 or /reports/1.json
   def destroy
+    render_403_page and return unless request_from_author?
+
     @report.destroy
 
     redirect_to reports_url, notice: t('controllers.common.notice_destroy', name: Report.model_name.human)
@@ -58,5 +62,9 @@ class ReportsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def report_params
     params.require(:report).permit(:title, :content, :user_id)
+  end
+
+  def request_from_author?
+    @report.user_id == current_user.id
   end
 end

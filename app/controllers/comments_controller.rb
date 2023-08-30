@@ -16,12 +16,12 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    @comment = @commentable.comments.find(params[:id])
-    render file: Rails.root.join('public/403.html'), layout: false, status: :forbidden if @comment.user_id != current_user.id
+    render_403_page unless request_from_author?
   end
 
   def update
-    @comment = @commentable.comments.find(params[:id])
+    render_403_page and return unless request_from_author?
+
     if @comment.update(comment_params)
       redirect_to @commentable, notice: t('controllers.common.notice_update', name: Comment.model_name.human)
     else
@@ -30,8 +30,9 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    comment = @commentable.comments.find(params[:id])
-    if comment.destroy
+    render_403_page and return unless request_from_author?
+
+    if @comment.destroy
       redirect_to @commentable, notice: t('controllers.common.notice_destroy', name: Comment.model_name.human)
     else
       render_show_template_of_commentable
@@ -42,5 +43,10 @@ class CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:content)
+  end
+
+  def request_from_author?
+    @comment = @commentable.comments.find(params[:id])
+    @comment.user_id == current_user.id
   end
 end

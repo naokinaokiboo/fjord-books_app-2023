@@ -22,9 +22,10 @@ module ApplicationHelper
   end
 
   def convert_to_linked_text(text)
-    URI.extract(text, ['http', 'https']).uniq.each_with_object(text) do |url|
-      linked_text = "<a href=\"#{url}\">#{url}</a>"
-      text.gsub!(url, linked_text)
+    URI.extract(text, %w[http https]).uniq.each do |url|
+      linked_url = "<a href=\"#{url}\">#{url}</a>"
+      text.gsub!(url, linked_url)
     end
+    text
   end
 end

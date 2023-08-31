@@ -6,11 +6,11 @@
     <tbody>
       <tr>
         <td class="user_name">
-          <%= t(Comment.human_attribute_name(:user)) %>
+          <%= Comment.human_attribute_name(:user) %>
           <%= user.name.empty? ? user.email : user.name %>
         </td>
         <td class="created_at">
-          <%= t(Comment.human_attribute_name(:created_at)) %>
+          <%= Comment.human_attribute_name(:created_at) %>
           <%= l comment.created_at, format: :long %>
         </td>
       </tr>

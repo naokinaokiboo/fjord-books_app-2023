@@ -1,5 +1,5 @@
 <div class="mentions-container">
-  <% unless reports.empty? %>
+  <% if reports.present? %>
     <strong><%= t('views.mentions.title', name: Report.model_name.human) %>
     <ul>
       <% reports.each do |report| %>

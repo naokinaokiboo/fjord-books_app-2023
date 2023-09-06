@@ -25,4 +25,8 @@ class ApplicationController < ActionController::Base
   def signed_in_root_path(_resource_or_scope)
     user_path(current_user)
   end
+
+  def render_403_page
+    render file: Rails.root.join('public/403.html'), layout: false, status: :forbidden
+  end
 end

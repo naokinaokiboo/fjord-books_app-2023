@@ -4,7 +4,7 @@
   <%= render @report %>
 </div>
 
-<%= render partial: 'mention', locals: { reports: @report.mentioned_reports } %>
+<%= render partial: 'mentions', locals: { reports: @report.mentioned_reports } %>
 
 <%= render 'shared/comments', commentable: @report %>
 

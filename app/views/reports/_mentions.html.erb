@@ -1,6 +1,8 @@
 <div class="mentions-container">
   <% if reports.present? %>
-    <strong><%= t('views.mentions.title', name: Report.model_name.human) %>
+    <strong>
+      <%= t('views.mentions.title', name: Report.model_name.human) %>
+    </strong>
     <ul>
       <% reports.each do |report| %>
         <li>

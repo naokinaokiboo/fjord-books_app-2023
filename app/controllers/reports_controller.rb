@@ -83,7 +83,6 @@ class ReportsController < ApplicationController
     domain_path = 'http://localhost:3000/reports/'
     ids_to_report = text.scan(/(?<=#{domain_path})[1-9][0-9]*/).uniq.map(&:to_i)
     ids_to_report.delete(@report.id)
-    existing_report_ids = Report.ids
-    ids_to_report.delete_if { |id| !existing_report_ids.include?(id) }
+    Report.where(id: ids_to_report).pluck(:id)
   end
 end

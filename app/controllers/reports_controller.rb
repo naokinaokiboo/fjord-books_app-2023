@@ -21,46 +21,51 @@ class ReportsController < ApplicationController
   def create
     @report = current_user.reports.new(report_params)
     ids_to_other_report = find_ids_to_other_report(@report.content)
-    begin
-      ActiveRecord::Base.transaction do
-        @report.save!
 
-        ids_to_other_report.each do |id|
-          next if ReportMention.exists?(mentioning_report_id: @report.id, mentioned_report_id: id)
+    result = true
+    ActiveRecord::Base.transaction do
+      result = @report.save
 
-          ReportMention.create!(mentioning_report_id: @report.id, mentioned_report_id: id)
-        end
+      ids_to_other_report.each do |id|
+        next if ReportMention.exists?(mentioning_report_id: @report.id, mentioned_report_id: id)
+
+        result &= ReportMention.create(mentioning_report_id: @report.id, mentioned_report_id: id)
       end
-    rescue ActiveRecord::RecordInvalid => e
-      loger.error(e.message)
-      render :new, status: :unprocessable_entity
-      return
+
+      raise ActiveRecord::Rollback unless result
     end
-    redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human)
+
+    if result
+      redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human)
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def update
     new_mentioning_ids = find_ids_to_other_report(report_params[:content])
     old_mentioning_ids = @report.mentioning_reports.each.map(&:id)
 
-    begin
-      ActiveRecord::Base.transaction do
-        @report.update!(report_params)
+    result = true
+    ActiveRecord::Base.transaction do
+      result = @report.update(report_params)
 
-        old_mentioning_ids.difference(new_mentioning_ids).each do |id_to_be_deleted|
-          ReportMention.find_by(mentioning_report_id: @report.id, mentioned_report_id: id_to_be_deleted).destroy!
-        end
-
-        new_mentioning_ids.difference(old_mentioning_ids).each do |id_to_be_saved|
-          ReportMention.create!(mentioning_report_id: @report.id, mentioned_report_id: id_to_be_saved)
-        end
+      old_mentioning_ids.difference(new_mentioning_ids).each do |id_to_be_deleted|
+        result &= ReportMention.find_by(mentioning_report_id: @report.id, mentioned_report_id: id_to_be_deleted)&.destroy
       end
-    rescue ActiveRecord::RecordInvalid => e
-      loger.error(e.message)
-      render :edit, status: :unprocessable_entity
-      return
+
+      new_mentioning_ids.difference(old_mentioning_ids).each do |id_to_be_saved|
+        result &= ReportMention.create(mentioning_report_id: @report.id, mentioned_report_id: id_to_be_saved)
+      end
+
+      raise ActiveRecord::Rollback unless result
     end
-    redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human)
+
+    if result
+      redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human)
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy

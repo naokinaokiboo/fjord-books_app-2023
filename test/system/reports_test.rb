@@ -31,6 +31,9 @@ class ReportsTest < ApplicationSystemTestCase
     click_on '登録する'
 
     assert_text '日報が作成されました。'
+    assert_text 'タイトル: Railsでテストを書く'
+    assert_text '内容: テストデータの作成にfixturesを使用した後、FactoryBotも試してみた'
+    assert_text '作成者: test1'
   end
 
   test 'should not create report' do
@@ -50,11 +53,18 @@ class ReportsTest < ApplicationSystemTestCase
     visit report_url(@report)
     click_on 'この日報を編集'
 
+    assert_no_text 'タイトル: Railsでテストを書く'
+    assert_no_text '内容: テストデータの作成にfixturesを使用した後、FactoryBotも試してみた'
+    assert_no_text '作成者: test1'
+
     fill_in 'タイトル', with: 'Railsでテストを書く'
     fill_in '内容', with: 'テストデータの作成にfixturesを使用した後、FactoryBotも試してみた'
     click_on '更新する'
 
     assert_text '日報が更新されました。'
+    assert_text 'タイトル: Railsでテストを書く'
+    assert_text '内容: テストデータの作成にfixturesを使用した後、FactoryBotも試してみた'
+    assert_text '作成者: test1'
   end
 
   test 'should not update Report' do
@@ -72,8 +82,12 @@ class ReportsTest < ApplicationSystemTestCase
 
   test 'should destroy Report' do
     visit report_url(@report)
+    assert_text 'Report 1'
+    assert_text 'Content 1'
     click_on 'この日報を削除'
 
     assert_text '日報が削除されました。'
+    assert_no_text 'Report 1'
+    assert_no_text 'Content 1'
   end
 end

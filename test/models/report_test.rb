@@ -7,12 +7,12 @@ class ReportTest < ActiveSupport::TestCase
     FactoryBot.rewind_sequences
   end
 
-  test 'editable? should return true' do
+  test 'editable? should return true when the user is the author of the report' do
     report = build(:report_with_user)
     assert_equal true, report.editable?(report.user)
   end
 
-  test 'editable? should return false' do
+  test 'editable? should return false when the user is not the author of the report' do
     report1 = build(:report_with_user)
     report2 = build(:report_with_user)
     assert_equal false, report2.editable?(report1.user)
@@ -23,7 +23,7 @@ class ReportTest < ActiveSupport::TestCase
     assert_equal Date.new(2023, 9, 6), report.created_on
   end
 
-  test 'save_mentions should link other reports' do
+  test '#save_mentions should create association with reports that has a URL in content' do
     report1 = create(:report_with_user)
     report2 = create(:report_with_user)
     report3 = create(:report_with_user)
@@ -42,7 +42,7 @@ class ReportTest < ActiveSupport::TestCase
     assert_equal [report1, report2, report3, report4], report.mentioning_reports
   end
 
-  test 'save_mentions should not link other reports' do
+  test '#save_mentions should not create association with reports that does not have a URL in content' do
     create(:report_with_user)
     create(:report_with_user)
     create(:report_with_user)

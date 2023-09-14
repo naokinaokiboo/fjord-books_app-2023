@@ -319,3 +319,11 @@ form input[type="submit"] {
 form input[type="submit"]:hover {
   background-color: var(--global-primary-c-hover);
 }
+
+.mentions-container {
+  margin-top: 25px;
+}
+
+.mentions-container li {
+  margin-top: 5px;
+}

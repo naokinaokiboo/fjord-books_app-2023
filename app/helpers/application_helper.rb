@@ -18,4 +18,11 @@ module ApplicationHelper
   def format_content(content)
     safe_join(content.split("\n"), tag.br)
   end
+
+  def convert_to_linked_text(text)
+    URI.extract(text, %w[http https]).uniq.inject(text) do |result, url|
+      linked_url = "<a href=\"#{url}\">#{url}</a>"
+      result.gsub(url, linked_url)
+    end
+  end
 end
